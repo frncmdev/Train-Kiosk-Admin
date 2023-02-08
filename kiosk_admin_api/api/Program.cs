@@ -9,7 +9,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate();
 builder.Services.AddTransient<IAuthService, AuthService>();
-builder.Services.AddScoped<ITrainStationService, TrainStationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

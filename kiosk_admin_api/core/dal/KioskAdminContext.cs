@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using core.models.DbEntities;
+using Microsoft.EntityFrameworkCore;
+using core.models;
 
 namespace core.dal;
 
@@ -19,7 +19,7 @@ public partial class KioskAdminContext : DbContext
     {
     }
 
-    public virtual DbSet<Direction> Directions { get; set; }
+    public virtual DbSet<Campus> Campuses { get; set; }
 
     public virtual DbSet<TrainStation> TrainStations { get; set; }
 
@@ -27,31 +27,30 @@ public partial class KioskAdminContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(_appConfig["ConnectionStrings:KioskDb"]);
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Direction>(entity =>
+        modelBuilder.Entity<Campus>(entity =>
         {
-            entity.HasKey(e => e.DirectionId).HasName("PK__directio__FAAC47DB48316779");
+            entity.HasKey(e => e.CampusId).HasName("PK__Campus__01989FD186687E63");
 
-            entity.ToTable("direction");
+            entity.ToTable("Campus");
 
-            entity.Property(e => e.DirectionId)
-                .ValueGeneratedNever()
-                .HasColumnName("direction_id");
-            entity.Property(e => e.DirectionName)
-                .HasMaxLength(200)
-                .HasColumnName("direction_name");
+            entity.Property(e => e.CampusId).HasColumnName("campus_id");
+            entity.Property(e => e.CampusName)
+                .HasMaxLength(50)
+                .HasColumnName("campus_name");
+            entity.Property(e => e.IsSelected).HasColumnName("isSelected");
             entity.Property(e => e.TrainstationId).HasColumnName("trainstation_id");
 
-            entity.HasOne(d => d.Trainstation).WithMany(p => p.Directions)
+            entity.HasOne(d => d.Trainstation).WithMany(p => p.Campuses)
                 .HasForeignKey(d => d.TrainstationId)
-                .HasConstraintName("FK_Direction_Train_Station");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Campus_TrainStation");
         });
 
         modelBuilder.Entity<TrainStation>(entity =>
         {
-            entity.HasKey(e => e.TrainstationId).HasName("PK__Train_St__AA3A51EE76EF8A69");
+            entity.HasKey(e => e.TrainstationId).HasName("PK__Train_St__AA3A51EE1D64B1F2");
 
             entity.ToTable("Train_Station");
 
@@ -61,6 +60,7 @@ public partial class KioskAdminContext : DbContext
             entity.Property(e => e.TrainstationName)
                 .HasMaxLength(50)
                 .HasColumnName("trainstation_name");
+            entity.Property(e => e.TravelTime).HasColumnName("travelTime");
         });
 
         modelBuilder.Entity<User>(entity =>

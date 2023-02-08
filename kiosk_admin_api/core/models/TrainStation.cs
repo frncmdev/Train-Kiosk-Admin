@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace core.models.DbEntities;
+namespace core.models;
 
 public partial class TrainStation
 {
@@ -9,5 +9,7 @@ public partial class TrainStation
 
     public string? TrainstationName { get; set; }
 
-    public virtual ICollection<Direction> Directions { get; } = new List<Direction>();
+    public int TravelTime { get; set; }
+
+    public virtual ICollection<Campus> Campuses { get; } = new List<Campus>();
 }

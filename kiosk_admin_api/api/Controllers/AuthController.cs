@@ -26,5 +26,24 @@ namespace api.Controllers
             }
             return Forbid();
         }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest _registerRequest)
+        {
+            RegisterResult _result = await _service.AddUser(_registerRequest);
+            RegisterResultEnum _resultEnum = _result.result;
+            switch (_resultEnum)
+            {
+                case RegisterResultEnum.Successful:
+                    return NoContent();
+                case RegisterResultEnum.NotAuthorizedError:
+                    return Unauthorized();
+                case RegisterResultEnum.DatabaseError:
+                    return ValidationProblem();
+                case RegisterResultEnum.UserAlreadyExistsError:
+                    return BadRequest();
+                default: 
+                    return StatusCode(418);
+            }
+        }
     }
 }
