@@ -7,7 +7,7 @@ namespace core.services
 {
     public interface IAuthService
     {
-        public Task<bool> Login(LoginRequest _loginRequest);
+        public Task<Tuple<bool, string>> Login(LoginRequest _loginRequest);
         // implement password decrypting and add password secret to user secrets. 
         public Task<RegisterResult> AddUser(RegisterRequest _registerRequest);
     }

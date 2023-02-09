@@ -30,10 +30,12 @@ namespace tests
         [Fact]
         public async Task TestLogin()
         {
+            var request = await _service.Login(new LoginRequest("TestAuth", "TestAuth"));
             int successes = 0;
-            if(await _service.Login(new LoginRequest("TestAuth", "TestAuth")))
+            if(request.Item1)
                 successes +=1;
-            if(!await _service.Login(new LoginRequest("TestAutho", "TestAutho")))
+            request = await _service.Login(new LoginRequest("TestAuth", "TestAuth0"));
+            if(!request.Item1)
                 successes +=1;
             if(successes == 2)
                 Assert.True(true);

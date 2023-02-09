@@ -21,9 +21,10 @@ namespace api.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(LoginRequest _loginRequest)
         {
-            if(await _service.Login(_loginRequest))
+            var tuple = await _service.Login(_loginRequest);
+            if(tuple.Item1)
             {
-                return Accepted();
+                return Ok(tuple.Item2);
             }
             return Forbid();
         }
