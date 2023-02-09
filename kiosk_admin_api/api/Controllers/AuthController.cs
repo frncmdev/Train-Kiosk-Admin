@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
@@ -47,6 +47,14 @@ namespace api.Controllers
                 default: 
                     return StatusCode(418);
             }
+        }
+        [HttpPost]
+        [Route("auth")]
+        public async Task<IActionResult> Auth(string _userID)
+        {
+            if(await _service.Auth(_userID))
+                return Accepted();
+            return Forbid();
         }
     }
 }

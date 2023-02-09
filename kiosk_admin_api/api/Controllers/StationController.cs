@@ -8,7 +8,7 @@ using core.models;
 namespace api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class StationController : ControllerBase
     {
         private readonly IStationService _service;

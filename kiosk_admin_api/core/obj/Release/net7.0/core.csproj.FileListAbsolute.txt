@@ -1,0 +1,14 @@
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\bin\Release\net7.0\core.deps.json
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\bin\Release\net7.0\core.runtimeconfig.json
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\bin\Release\net7.0\core.dll
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\bin\Release\net7.0\core.pdb
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.csproj.AssemblyReference.cache
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.AssemblyInfoInputs.cache
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.AssemblyInfo.cs
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.csproj.CoreCompileInputs.cache
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.dll
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\refint\core.dll
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.pdb
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\core.genruntimeconfig.cache
+C:\Users\YNTMD\projects\kangan\Train-Kiosk-Admin\kiosk_admin_api\core\obj\Release\net7.0\ref\core.dll

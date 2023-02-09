@@ -83,6 +83,13 @@ namespace core.services
             _newUser.Password = _password;
             return _newUser;
         };
+        public async Task<bool> Auth(string _userID)
+        {
+            User _user = await _context.Users.SingleOrDefaultAsync(user => user.UserId == _userID);
+            if(_user is not null)
+                return true;
+            return false;
+        }
 
     }
 }
