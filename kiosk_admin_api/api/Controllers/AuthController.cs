@@ -18,6 +18,7 @@ namespace api.Controllers
             _service = service;
         }
         [HttpPost]
+        [Route("login")]
         public async Task<IActionResult> Login(LoginRequest _loginRequest)
         {
             if(await _service.Login(_loginRequest))
@@ -27,6 +28,7 @@ namespace api.Controllers
             return Forbid();
         }
         [HttpPost]
+        [Route("register")]
         public async Task<IActionResult> Register(RegisterRequest _registerRequest)
         {
             RegisterResult _result = await _service.AddUser(_registerRequest);

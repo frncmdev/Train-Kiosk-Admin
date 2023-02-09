@@ -8,7 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate();
-builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddSingleton<IAuthService, AuthService>();
+builder.Services.AddScoped<IStationService, StationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
