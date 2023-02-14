@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   isAuthed$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  baseUrl: string = "https://";
+  baseUrl: string = "http://67.219.107.113/admin/api/v1/";
   constructor(private _http: HttpClient) { }
   login(_request: ILoginRequest): void
   {
