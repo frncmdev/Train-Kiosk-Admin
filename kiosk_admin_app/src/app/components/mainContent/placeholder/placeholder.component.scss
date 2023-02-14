@@ -1,0 +1,21 @@
+
+.background--image--wrapper
+{
+  height:100vh;
+  width: 100%;
+  .image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }
+  .router-outlet
+  {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+}

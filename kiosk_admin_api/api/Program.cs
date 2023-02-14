@@ -1,6 +1,7 @@
 using core.services;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 var builder = WebApplication.CreateBuilder(args);
+var MyPolicy = "_myPolicy";
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -12,7 +13,7 @@ builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddScoped<IStationService, StationService>();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "MyPolicy",
+    options.AddPolicy(name: MyPolicy,
         policy =>
         {
             policy.AllowAnyOrigin();
@@ -31,7 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors(MyPolicy);
 app.UseAuthorization();
 
 app.MapControllers();

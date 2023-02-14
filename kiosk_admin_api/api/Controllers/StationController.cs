@@ -16,6 +16,7 @@ namespace api.Controllers
         {
             _service = service;
         }
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Campus>>> GetAll()
         {
