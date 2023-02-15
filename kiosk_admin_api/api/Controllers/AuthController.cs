@@ -24,7 +24,7 @@ namespace api.Controllers
             var tuple = await _service.Login(_loginRequest);
             if(tuple.Item1)
             {
-                return Ok(tuple.Item2);
+                return Ok(new LoginResult(tuple.Item2));
             }
             return Forbid();
         }
@@ -48,13 +48,6 @@ namespace api.Controllers
                     return StatusCode(418);
             }
         }
-        [HttpPost]
-        [Route("auth")]
-        public async Task<IActionResult> Auth(string _userID)
-        {
-            if(await _service.Auth(_userID))
-                return Accepted();
-            return Forbid();
-        }
+        
     }
 }

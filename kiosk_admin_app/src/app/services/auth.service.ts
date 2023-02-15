@@ -15,14 +15,23 @@ export class AuthService {
   {
     let requestHeaders = new HttpHeaders();
     requestHeaders = requestHeaders.append('Content-Type', 'application/json')
-    return this._http.post<HttpResponse<any>>(`${this.baseUrl}Auth/login/`, _request);
+    return this._http.post<HttpResponse<string>>(`${this.baseUrl}Auth/login`, _request);
   }
   register(_request: IRegisterRequest): void
   {
 
   }
-  auth(_request: string)
+  auth(): boolean
   {
+    let userId = sessionStorage.getItem("userId")
+    let token = userId?.toString().split(":")[1].split("\"")[1];
+    if(token && this.isAuthed$.subscribe(_ =>this.isAuthed$))
+    {
+      this.isAuthed$.unsubscribe();
+      return true;
+    }
+    this.isAuthed$.unsubscribe();
+    return false
 
   }
   logOut()

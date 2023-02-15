@@ -29,11 +29,17 @@ export class LoginComponent implements OnInit {
     this.loginRequest.password = this._loginPassword
 
     if(this.isAuthed)
+      if(!this._authService.auth())
+        return;
       this.router.navigate(["/changeStation"])
-    this._authService.login(this.loginRequest).subscribe(item => {
-
-    });
-
+    this._authService.login(this.loginRequest).subscribe(item =>
+      {
+        sessionStorage.setItem("userId", JSON.stringify(item));
+        this._authService.isAuthed$.next(true);
+        this.router.navigate(["/changeStation"])
+      }, error => {
+        console.error(error)
+      });
   }
   ngOnInit(): void {
     this._authService.isAuthed$.subscribe(isAuthedRes => this.isAuthed = isAuthedRes);

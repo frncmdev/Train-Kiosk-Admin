@@ -1,8 +1,8 @@
 import { ICampus } from './../models/DBEntities/campus';
 import { AuthService } from './auth.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -24,16 +24,9 @@ export class DataService {
   {
     this._http.get<ICampus>(`${this._baseURL}Station/getSelected`).subscribe(item => this.selectedCampus$?.next(item))
   }
-  changeCampus(_newSelectedStation: ICampus): void
+  changeCampus(_newSelectedStation: ICampus): Observable<Object>
   {
-    if(this._authService.isAuthed$)
-    {
-      this._http.post(`${this._baseURL}/changeStation`, _newSelectedStation).subscribe();
-    }
-    else
-    {
-      return;
-    }
+    return this._http.post(`${this._baseURL}Station/changeStation`, _newSelectedStation)
 
   }
 }

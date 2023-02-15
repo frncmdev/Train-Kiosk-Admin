@@ -46,7 +46,7 @@ namespace core.services
         // gets the campus that is currently selected
         public async Task<Campus> GetSelectedStation()
         {
-            Campus _value = await _context.Campuses.SingleOrDefaultAsync(_campus => _campus.IsSelected == true);
+            Campus _value = await _context.Campuses.Include(_campus => _campus.Trainstation ).SingleOrDefaultAsync(_campus => _campus.IsSelected == true);
             if(_value is not null)
                 return _value;
             return null;
@@ -54,7 +54,7 @@ namespace core.services
         // Checks if the campus provided is selected
         private async Task<bool> _checkChanges(Campus _campus)
         {
-            Campus _campusToCheck = await _context.Campuses.SingleOrDefaultAsync(_camp => _camp.CampusId == _campus.CampusId);
+            Campus _campusToCheck = await _context.Campuses.Include(_campus => _campus.Trainstation ).SingleOrDefaultAsync(_camp => _camp.CampusId == _campus.CampusId);
             if(_campusToCheck.IsSelected)
                 return true;
             return false;
