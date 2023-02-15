@@ -17,6 +17,7 @@ export class ChangeStationComponent implements OnInit {
   ngOnInit(): void {
     this.campusList$.subscribe(array =>
       {
+        console.log(array)
         let sortedArray: ICampus[] = this.sortObjectsBySelected(array)
         this.campusList$ = of(sortedArray);
       })
@@ -26,6 +27,7 @@ export class ChangeStationComponent implements OnInit {
     // console.log(this.selectedValue)
     let _tempArr: ICampus[] = []
     this.campusList$.subscribe(_array => {
+
       _tempArr = _array
     })
     let _selected = _tempArr[this.selectedValue-1]

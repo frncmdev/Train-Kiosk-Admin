@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using core.services;
 using core.models;
+using core.models.RequestResults;
 namespace api.Controllers
 {
     [ApiController]
@@ -16,7 +17,6 @@ namespace api.Controllers
         {
             _service = service;
         }
-        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Campus>>> GetAll()
         {
@@ -27,6 +27,12 @@ namespace api.Controllers
         public async Task<ActionResult<Campus>> GetSelected()
         {
             return Ok(await _service.GetSelectedStation());
+        }
+        [HttpGet]
+        [Route("getStationToSelected")]
+        public async Task<ActionResult<TrainStation>> GetStation([FromQuery]CampusDTO _campus)
+        {
+            return Ok(await _service.GetStation(_campus));
         }
         [HttpPost]
         [Route("changeStation")]
