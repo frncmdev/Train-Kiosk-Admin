@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './components/mainContent/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/mainContent/register/register.component';
 import { ChangeStationComponent } from './components/mainContent/change-station/change-station.component';
 import { LoginComponent } from './components/mainContent/login/login.component';
@@ -8,7 +9,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {path: "", component:LoginComponent},
   {path: "changeStation", component:ChangeStationComponent},
-  {path: "addUser", component:RegisterComponent}
+  {path: "addUser", component:RegisterComponent},
+  {path: "**", component:PageNotFoundComponent}
 ];
 
 @NgModule({

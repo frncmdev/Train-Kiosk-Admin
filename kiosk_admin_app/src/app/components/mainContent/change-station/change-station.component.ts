@@ -1,5 +1,6 @@
+import { ITrainStation } from './../../../models/DBEntities/trainstation';
 import { DataService } from './../../../services/data.service';
-import { Observable, of, find, filter } from 'rxjs';
+import { Observable, of, find, filter, BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ICampus } from 'src/app/models/DBEntities/campus';
 
@@ -27,13 +28,39 @@ export class ChangeStationComponent implements OnInit {
     // console.log(this.selectedValue)
     let _tempArr: ICampus[] = []
     this.campusList$.subscribe(_array => {
-
       _tempArr = _array
     })
-    let _selected = _tempArr[this.selectedValue-1]
+    let _selected = _tempArr.filter(id => id.campusId == this.selectedValue)[0];
     console.log(_selected);
+    this._dataService.selectedCampus$.next(_selected);
+    this.selected$ = this._dataService.selectedCampus$;
 
-    this._dataService.changeCampus(_selected).subscribe(arg => console.log(arg));
+    let stationClosest: BehaviorSubject<ITrainStation|any> = new BehaviorSubject({} as ITrainStation);
+    this._dataService.getClosestStation({
+      campusId: _selected.campusId,
+      campusName: _selected.campusName,
+      trainstationId: _selected.trainstationId
+    }).subscribe(_trainStation => {
+      stationClosest.next(_trainStation);
+    })
+    stationClosest.subscribe(item => {
+      let request: ICampus = {
+        campusId: _selected.campusId,
+        campusName: _selected.campusName,
+        isSelected: _selected.isSelected,
+        trainstationId: _selected.trainstationId,
+        trainstation:{
+          trainstationId: item.trainstationId,
+          trainstationName: item.trainstationName,
+          travelTime: item.travelTime,
+          campuses: item.campuses
+        }
+      }
+      console.log(request)
+      this._dataService.changeCampus(request).subscribe(arg => console.log(arg));
+
+    });
+    stationClosest.unsubscribe();
 
     // console.log(selected);
     // this.campusList$.pipe(

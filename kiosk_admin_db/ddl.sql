@@ -39,3 +39,9 @@ insert into Campus (campus_name, isSelected, trainstation_id) values
     ('Essendon', 0, 1064)
 insert into [User] ([userId], [username], [password]) values
     ('b28f8a2346bb4fc6800a5572e5e20209', 'RootAuthority', 'ea4f85ee3cb498c748564fbc64ca290bfd96ae8d0a84c434fea541f50fdc0424')
+
+
+
+select * from Campus C  
+INNER join Train_Station T
+on C.trainstation_id = T.trainstation_id

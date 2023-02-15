@@ -1,11 +1,13 @@
 <div class="change--station--modal">
   <img src="assets/kangan-logo.png" alt="">
-  <p *ngIf="selected$ | async as campus">Current Selected Station: {{campus.campusName}}</p>
+  <p *ngIf="selected$ | async as campus" class="selected">Current Selected Station: {{campus.campusName}}</p>
   <div class="" >
     <select class="select" [(ngModel)]="selectedValue">
       <option value="{{item.campusId}}" *ngFor="let item of campusList$| async;">{{item.campusName}}</option>
     </select>
-    <br>
-    <button class="save--button" (click)="clickHandler()">Save Selection</button>
+    <div class="button--wrapper">
+      <button class="save--button" (click)="clickHandler()">Save Selection</button>
+      <button [routerLink]="['/addUser']">Add User</button>
+    </div>
   </div>
 </div>
