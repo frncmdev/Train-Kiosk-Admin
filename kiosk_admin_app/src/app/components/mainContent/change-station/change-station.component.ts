@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../../../services/auth.service';
 import { ITrainStation } from './../../../models/DBEntities/trainstation';
 import { DataService } from './../../../services/data.service';
 import { Observable, of, find, filter, BehaviorSubject } from 'rxjs';
@@ -10,10 +12,19 @@ import { ICampus } from 'src/app/models/DBEntities/campus';
   styleUrls: ['./change-station.component.scss']
 })
 export class ChangeStationComponent implements OnInit {
+  isLoading: boolean = false;
+  success: boolean = false;
   selected$: Observable<ICampus> = this._dataService.selectedCampus$;
   campusList$: Observable<ICampus[]> = this._dataService.campuses$;
   selectedValue: number = 1;
-  constructor(private _dataService: DataService) { }
+  constructor(private _dataService: DataService, private _authService: AuthService, private router: Router) {
+    this._authService.loading$.subscribe(loadingState => {
+      this.isLoading = loadingState
+    });
+    this._dataService.success$.subscribe(successState => {
+      this.success = successState;
+    })
+   }
 
   ngOnInit(): void {
     this.campusList$.subscribe(array =>
@@ -22,6 +33,18 @@ export class ChangeStationComponent implements OnInit {
         let sortedArray: ICampus[] = this.sortObjectsBySelected(array)
         this.campusList$ = of(sortedArray);
       })
+      if(!this._authService.isAuthed$.getValue())
+        this.router.navigate(["/"])
+    }
+  signOut()
+  {
+    this._authService.logOut();
+    setTimeout(()=> {
+      this._authService.loading$.next(false);
+      this.router.navigate(["/"])
+    }, 3000)
+
+
   }
   clickHandler()
   {
@@ -57,7 +80,16 @@ export class ChangeStationComponent implements OnInit {
         }
       }
       console.log(request)
-      this._dataService.changeCampus(request).subscribe(arg => console.log(arg));
+      this._dataService.changeCampus(request).subscribe(request => {
+        setTimeout(() => this._authService.loading$.next(false),1500);
+        this._dataService.success$.next(true);
+        setTimeout(()=> this._dataService.success$.next(false), 5000)
+      },
+      err =>
+      {
+        this._authService.err.next(true);
+        this._authService.errMsg.next(err);
+      });
 
     });
     stationClosest.unsubscribe();

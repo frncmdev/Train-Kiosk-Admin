@@ -8,35 +8,29 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  err: BehaviorSubject<boolean>;
+  errMsg: BehaviorSubject<any>;
+  loading$: BehaviorSubject<boolean>;
   isAuthed$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   baseUrl: string = "http://67.219.107.113/admin/api/v1/";
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+    this.loading$ = new BehaviorSubject<boolean>(false);
+    this.err = new BehaviorSubject<boolean>(false);
+    this.errMsg = new BehaviorSubject<any>("");
+   }
   login(_request: ILoginRequest): Observable<HttpResponse<string>>
   {
+    this.loading$.next(true)
     let requestHeaders = new HttpHeaders();
     requestHeaders = requestHeaders.append('Content-Type', 'application/json')
     return this._http.post<HttpResponse<string>>(`${this.baseUrl}Auth/login`, _request);
   }
-  register(_request: IRegisterRequest): void
-  {
 
-  }
-  auth(): boolean
-  {
-    let userId = sessionStorage.getItem("userId")
-    let token = userId?.toString().split(":")[1].split("\"")[1];
-    if(token && this.isAuthed$.subscribe(_ =>this.isAuthed$))
-    {
-      this.isAuthed$.unsubscribe();
-      return true;
-    }
-    this.isAuthed$.unsubscribe();
-    return false
-
-  }
   logOut()
   {
+    this.loading$.next(true);
     sessionStorage.removeItem("userId");
     this.isAuthed$.next(false);
+
   }
 }

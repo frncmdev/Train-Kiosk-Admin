@@ -7,7 +7,16 @@
     </select>
     <div class="button--wrapper">
       <button class="save--button" (click)="clickHandler()">Save Selection</button>
-      <button [routerLink]="['/addUser']">Add User</button>
+      <button class="logout" (click)="signOut()">sign out</button>
     </div>
+  </div>
+  <div *ngIf="isLoading" class="loadingBox">
+    <app-loading></app-loading>
+
+  </div>
+  <div class="successBox" *ngIf="success">
+    <app-change-station-success>
+
+    </app-change-station-success>
   </div>
 </div>

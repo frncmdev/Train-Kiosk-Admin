@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./placeholder.component.scss']
 })
 export class PlaceholderComponent implements OnInit {
+  error: boolean = false;
 
-  constructor() { }
+  constructor(private _authService: AuthService) {
+    this._authService.err.subscribe(_error => this.error = _error)
+
+   }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,6 @@
 .login--modal
 {
+  width: 35vw;
   padding:3rem 4rem;
   background-color: #dddddd75;
   display: flex;
@@ -11,18 +12,25 @@
 
   input {
     text-align: center;
-    margin: 1rem 0;
-    padding: 1rem;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
     border: 2px solid #11111175;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     color: #111;
+    ::placeholder {
+      color:#bbb;
+    }
 
   }
   .login--btn
   {
     margin-top: 0.75rem;
-    padding: 0.75rem 4.75rem;
+    padding: 1rem 4.75rem;
     border-radius: 1rem;
     cursor: pointer;
   }
+}
+.loadingBox
+{
+  position: absolute;
 }

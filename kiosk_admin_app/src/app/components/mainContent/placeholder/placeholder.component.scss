@@ -18,4 +18,17 @@
     align-items: center;
     z-index: 1;
   }
+  .errorBox
+    {
+      position: absolute;
+      top:0;
+      left: 0;
+      bottom: -99rem;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 99;
+    }
 }

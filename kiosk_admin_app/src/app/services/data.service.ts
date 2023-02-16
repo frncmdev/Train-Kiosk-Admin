@@ -4,12 +4,12 @@ import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { of } from 'rxjs';
 import { ITrainStation } from '../models/DBEntities/trainstation';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  success$: BehaviorSubject<boolean>;
   _baseURL: string = "http://67.219.107.113/admin/api/v1/";
   selectedCampus$: BehaviorSubject<ICampus>;
   campuses$: BehaviorSubject<ICampus[]> = new BehaviorSubject(new Array<ICampus>);
@@ -17,6 +17,7 @@ export class DataService {
     this.selectedCampus$ = new BehaviorSubject<ICampus>({} as ICampus);
     this.getCampuses();
     this.getCampus();
+    this.success$ = new BehaviorSubject(false);
   }
   getCampuses()
   {
@@ -28,6 +29,7 @@ export class DataService {
   }
   changeCampus(_newSelectedStation: ICampus): Observable<Object>
   {
+    this._authService.loading$.next(true);
     return this._http.post(`${this._baseURL}Station/changeStation`, _newSelectedStation)
 
   }

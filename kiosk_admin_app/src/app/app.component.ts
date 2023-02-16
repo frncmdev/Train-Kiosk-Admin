@@ -11,11 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   title = 'kiosk_admin_app';
-  isAuthed$: boolean = false;
 
   constructor(private _authService: AuthService)
   {
-    this._authService.isAuthed$.subscribe(_authedStatus$ => this.isAuthed$ = _authedStatus$);
-
   }
 }

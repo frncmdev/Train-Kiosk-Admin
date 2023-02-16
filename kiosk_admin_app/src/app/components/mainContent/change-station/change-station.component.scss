@@ -1,5 +1,7 @@
 .change--station--modal
 {
+  overflow-x: hidden;
+  width: 35vw;
   padding:3rem 4rem;
   background-color: #dddddd75;
   display: flex;
@@ -8,10 +10,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .select
+  {
+    font-size: 1.15rem;
+    padding: 3px 6px;
+    border-radius: 0.5rem;
+  }
   .selected
   {
     color: #111111;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
   .button--wrapper
   {
@@ -24,6 +32,11 @@
       border-radius: 1rem;
       padding: 0.5rem 1rem;
       cursor: pointer;
+
     }
+  }
+  .loadingBox
+  {
+    position: absolute;
   }
 }

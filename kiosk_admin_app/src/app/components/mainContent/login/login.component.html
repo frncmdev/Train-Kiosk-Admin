@@ -3,4 +3,9 @@
   <input type="text" placeholder="staff id" [(ngModel)]="_loginUsername">
   <input type="password" name="" id="" placeholder="password" [(ngModel)]="_loginPassword">
   <button class="login--btn" (click)="SubmitHandler()">Login</button>
+  <div class="loadingBox" *ngIf="isLoading">
+    <app-loading></app-loading>
+
+  </div>
+
 </div>

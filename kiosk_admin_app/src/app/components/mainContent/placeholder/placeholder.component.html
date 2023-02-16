@@ -3,5 +3,7 @@
   <div class="router-outlet">
     <router-outlet></router-outlet>
   </div>
-
+  <div class="errorBox" *ngIf="error">
+    <app-error></app-error>
+  </div>
 </div>
