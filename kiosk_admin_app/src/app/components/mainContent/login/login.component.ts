@@ -28,33 +28,36 @@ export class LoginComponent implements OnInit {
   }
 
 
-  SubmitHandler()
-  {
-    this.loginRequest.username = this._loginUsername;
-    this.loginRequest.password = this._loginPassword
+  SubmitHandler(): void {
+    const { _loginUsername, _loginPassword } = this;
+    const loginRequest = { username: _loginUsername, password: _loginPassword };
 
-    if(this.isAuthed)
-      this.router.navigate(["/changeStation"])
-    this._authService.login(this.loginRequest).subscribe(item =>
-      {
-        sessionStorage.setItem("userId", JSON.stringify(item));
+    if (this.isAuthed) {
+      this.router.navigate(['/changeStation']);
+    }
+
+    this._authService.login(loginRequest).subscribe({
+      next: (item) => {
+        sessionStorage.setItem('userId', JSON.stringify(item));
         this._authService.isAuthed$.next(true);
 
         setTimeout(() => {
-          this._authService.loading$.next(false)
-          this.router.navigate(["/changeStation"])
+          this._authService.loading$.next(false);
+          this.router.navigate(['/changeStation']);
         }, 3000);
-      }, error => {
-        setTimeout(() =>{
-          this._authService.loading$.next(false)
-          this._authService.err.next(true)
-          this._authService.errMsg.next(error)
-          console.error(error)
-          setTimeout(()=> this._authService.err.next(false), 5000)
-        }, 3000);
-      });
-
-
+      },
+      error: (err) => {
+        try {
+          this._authService.loading$.next(false);
+          this._authService.err.next(true);
+          this._authService.errMsg.next(err);
+          console.error(err);
+          setTimeout(() => this._authService.err.next(false), 5000);
+        } catch (e) {
+          console.error('Error while handling login error', e);
+        }
+      },
+    });
   }
   ngOnInit(): void {
     this._authService.isAuthed$.subscribe(isAuthedRes => this.isAuthed = isAuthedRes);

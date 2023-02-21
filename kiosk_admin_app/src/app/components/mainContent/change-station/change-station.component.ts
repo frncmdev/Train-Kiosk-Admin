@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { ITrainStation } from './../../../models/DBEntities/trainstation';
 import { DataService } from './../../../services/data.service';
-import { Observable, of, find, filter, BehaviorSubject } from 'rxjs';
+import { Observable, of, find, filter, BehaviorSubject,map } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ICampus } from 'src/app/models/DBEntities/campus';
 
@@ -46,58 +46,44 @@ export class ChangeStationComponent implements OnInit {
 
 
   }
-  clickHandler()
-  {
-    // console.log(this.selectedValue)
-    let _tempArr: ICampus[] = []
-    this.campusList$.subscribe(_array => {
-      _tempArr = _array
-    })
-    let _selected = _tempArr.filter(id => id.campusId == this.selectedValue)[0];
-    console.log(_selected);
-    this._dataService.selectedCampus$.next(_selected);
+  async clickHandler() {
+    const selected: ICampus = await this.campusList$.pipe(
+      map(list => list.find(id => id.campusId == this.selectedValue))
+    ).toPromise() as ICampus;
+    console.log(selected);
+    this._dataService.selectedCampus$.next(selected);
     this.selected$ = this._dataService.selectedCampus$;
 
-    let stationClosest: BehaviorSubject<ITrainStation|any> = new BehaviorSubject({} as ITrainStation);
-    this._dataService.getClosestStation({
-      campusId: _selected.campusId,
-      campusName: _selected.campusName,
-      trainstationId: _selected.trainstationId
-    }).subscribe(_trainStation => {
-      stationClosest.next(_trainStation);
-    })
-    stationClosest.subscribe(item => {
-      let request: ICampus = {
-        campusId: _selected.campusId,
-        campusName: _selected.campusName,
-        isSelected: _selected.isSelected,
-        trainstationId: _selected.trainstationId,
-        trainstation:{
-          trainstationId: item.trainstationId,
-          trainstationName: item.trainstationName,
-          travelTime: item.travelTime,
-          campuses: item.campuses
+    try {
+      const trainStation: ITrainStation = await this._dataService.getClosestStation({
+        campusId: selected.campusId,
+        campusName: selected.campusName,
+        trainstationId: selected.trainstationId
+      }).toPromise() as ITrainStation;
+
+      const request: ICampus = {
+        campusId: selected.campusId,
+        campusName: selected.campusName,
+        isSelected: selected.isSelected,
+        trainstationId: selected.trainstationId,
+        trainstation: {
+          trainstationId: trainStation.trainstationId,
+          trainstationName: trainStation.trainstationName,
+          travelTime: trainStation.travelTime,
+          campuses: trainStation.campuses
         }
-      }
-      console.log(request)
-      this._dataService.changeCampus(request).subscribe(request => {
-        setTimeout(() => this._authService.loading$.next(false),1500);
-        this._dataService.success$.next(true);
-        setTimeout(()=> this._dataService.success$.next(false), 5000)
-      },
-      err =>
-      {
-        this._authService.err.next(true);
-        this._authService.errMsg.next(err);
-      });
+      };
 
-    });
-    stationClosest.unsubscribe();
+      console.log(request);
 
-    // console.log(selected);
-    // this.campusList$.pipe(
-    //   filter(x => x.campusId === this.selectedValue-1))
-    // .subscribe(value => console.log(value));
+      await this._dataService.changeCampus(request).toPromise();
+      await this._authService.loading$.next(false);
+      await this._dataService.success$.next(true);
+      setTimeout(() => this._dataService.success$.next(false), 5000);
+    } catch (err) {
+      this._authService.err.next(true);
+      this._authService.errMsg.next(err);
+    }
   }
   sortObjectsBySelected(objects: ICampus[]): ICampus[] {
     const selectedObjects: ICampus[] = [];
