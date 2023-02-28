@@ -12,7 +12,7 @@ export class AuthService {
   errMsg: BehaviorSubject<any>;
   loading$: BehaviorSubject<boolean>;
   isAuthed$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  baseUrl: string = "https://67.219.107.113/admin/api/v1/";
+  baseUrl: string = "https://api.callumhopkins.au/admin/api/v1/";
   constructor(private _http: HttpClient) {
     this.loading$ = new BehaviorSubject<boolean>(false);
     this.err = new BehaviorSubject<boolean>(false);
