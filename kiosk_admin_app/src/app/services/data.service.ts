@@ -10,7 +10,7 @@ import { ITrainStation } from '../models/DBEntities/trainstation';
 })
 export class DataService {
   success$: BehaviorSubject<boolean>;
-  _baseURL: string = "http://67.219.107.113/admin/api/v1/";
+  _baseURL: string = "https://67.219.107.113/admin/api/v1/";
   selectedCampus$: BehaviorSubject<ICampus>;
   campuses$: BehaviorSubject<ICampus[]> = new BehaviorSubject(new Array<ICampus>);
   constructor(private _http: HttpClient, private _authService: AuthService) {
