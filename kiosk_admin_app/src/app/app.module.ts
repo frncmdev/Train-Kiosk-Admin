@@ -12,7 +12,7 @@ import { PlaceholderComponent } from './components/mainContent/placeholder/place
 import { PageNotFoundComponent } from './components/mainContent/page-not-found/page-not-found.component';
 import { LoadingComponent } from './components/popups/loading/loading.component';
 import { ErrorComponent } from './components/popups/error/error.component';
-import { ChangeStationSuccessComponent } from './components/popus/success/change-station-success/change-station-success.component';
+import { ChangeStationSuccessComponent } from './components/popups/success/change-station-success/change-station-success.component';
 import { SanitizerPipe } from './pipes/sanitizer.pipe';
 
 @NgModule({
